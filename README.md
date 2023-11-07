@@ -1,7 +1,29 @@
 # eBusiness-Project
 
-
-
+## Web scraping
+### Steps to run the scraper
+Open favourite console. Then move to the project directory and move to scraper directory
+```
+cd path/to/this/project
+cd scraper
+```
+Create _venv_:
+```
+py venv venv
+```
+Activate _venv_:
+```
+./venv/Scripts/activate
+```
+Download python packages:
+```
+pip install -r requirements.txt
+```
+Run scraper script:
+```
+py ./scraper_api.py
+```
+> The anticipation begins...
 ## Team members 
 
  - Alicja Graczyk 188814
