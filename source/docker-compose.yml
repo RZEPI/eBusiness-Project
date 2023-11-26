@@ -1,0 +1,34 @@
+version: '3'
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10.5
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=prestashop-database
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=root
+    ports:
+      - 3306
+    volumes:
+      - ./database:/var/lib/mysql
+    networks:
+      - prestashop_network
+  prestashop:
+    container_name: prestashop
+    image: prestashop/prestashop:1.7.8-apache
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    ports:
+      - 8080:80
+    environment:
+      PS_FOLDER_ADMIN: admin123
+      PS_FOLDER_INSTALL: install123
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - prestashop_network
+networks:
+    prestashop_network:
