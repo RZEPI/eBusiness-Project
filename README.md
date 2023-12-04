@@ -42,7 +42,12 @@ docker compose up -d
 Open the main store page:
 Open a web browser and go to the address localhost:8080
 
-To close the store and containers:
+To close the store:
+Run the script creating a database dump:
+```
+./dump.sh
+```
+Remove containers:
 ```
 docker compose down
 ```
