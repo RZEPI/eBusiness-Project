@@ -51,6 +51,30 @@ Remove containers:
 ```
 docker compose down
 ```
+
+## Steps to use the tester
+Open favourite console. Then move to the project directory and move to scraper directory
+```
+cd path/to/this/project
+cd tests
+```
+Create _venv_:
+```
+py venv venv
+```
+Activate _venv_:
+```
+./venv/Scripts/activate
+```
+Download python packages:
+```
+pip install -r requirements.txt
+```
+Run tests script:
+```
+py ./main.py
+```
+
 ## Team members 
 
  - Alicja Graczyk 188814
