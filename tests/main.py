@@ -15,10 +15,6 @@ SHOP_PAGE = "http://localhost:8080/index.php"
 MENU_SELECTORS = ["#category-3 > a", "#category-6 > a", "#category-9 > a"]
 CLOTHES_SUBMENU_SELECTORS = ["#category-4 > a", "#category-5 > a"]
 HOME_ACCESSORIES_SELECTOR = "#category-8 > a"
-# SUB MEN SELECTORS
-#js-product-list > div.products.row > div > article > div > div.thumbnail-top > a > img
-# ADD TO CART SELECTOR
-#add-to-cart-or-refresh > div.product-add-to-cart.js-product-add-to-cart > div > div.add > button
 
 def read_test_number(filename="test_number.txt"):
     try:
@@ -48,12 +44,9 @@ def return_to_category():
     return
 
 def add_to_cart(ammount):
-    # setting the ammount of products to add to cart
     for i in range(ammount - 1):
         driver.find_element(By.CSS_SELECTOR, "#add-to-cart-or-refresh > div.product-add-to-cart.js-product-add-to-cart > div > div.qty > div > span.input-group-btn-vertical > button.btn.btn-touchspin.js-touchspin.bootstrap-touchspin-up > i").click()
-    # add to cart
     driver.find_element(By.CSS_SELECTOR, "#add-to-cart-or-refresh > div.product-add-to-cart.js-product-add-to-cart > div > div.add > button").click()
-    # go back to shop
     continue_shopping()
     return_to_category()
     return
@@ -149,26 +142,25 @@ def main():
     driver.get(SHOP_PAGE)
 
     # ADD 10 PRODUCTS TO CART BETA, ONLY ONE ITEM ADDED FOR NOW
-    # Select the first category
-    #menu = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, MENU_SELECTORS[1])))
-    #ActionChains(driver).move_to_element(menu).perform()
-    #submenu = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, HOME_ACCESSORIES_SELECTOR)))
-    #submenu.click()
+    menu = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, MENU_SELECTORS[1])))
+    ActionChains(driver).move_to_element(menu).perform()
+    submenu = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, HOME_ACCESSORIES_SELECTOR)))
+    submenu.click()
     # Select the products
-    #product = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, '#js-product-list > div.products.row > div:nth-child(1) > article > div > div.thumbnail-top > a > img')))
-    #product.click()
-    #add_to_cart(10)
-    #product2 = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, '#js-product-list > div.products.row > div:nth-child(2) > article > div > div.thumbnail-top > a > img')))
-    #product2.click()
-    #add_to_cart(4)
-    #return_to_main_page()
+    product = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, '#js-product-list > div.products.row > div:nth-child(1) > article > div > div.thumbnail-top > a > img')))
+    product.click()
+    add_to_cart(10)
+    product2 = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, '#js-product-list > div.products.row > div:nth-child(2) > article > div > div.thumbnail-top > a > img')))
+    product2.click()
+    add_to_cart(4)
+    return_to_main_page()
 
     # SEARCH PRODUCT BY NAME AND ADD TO CART
     test_searchbar()
 
     # REMOVE ITEMS FROM CART BETA, NO REAL PRODUCTS IN STORE YET, ONLY 2 REMOVED FOR NOW
-    #remove_from_cart(2)
-    #return_to_main_page()
+    remove_from_cart(2)
+    return_to_main_page()
 
     # REGISTER NEW ACCOUNT
     register_account()
