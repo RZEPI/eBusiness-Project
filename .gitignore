@@ -2,4 +2,5 @@ scraper/venv/
 scraper/browser driver/
 source/database
 source/src/cache/
-source/src/var/cache/prod/*.log
+source/src/var/cache/
+*.log
