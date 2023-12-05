@@ -24,6 +24,20 @@ Run scraper script:
 py ./scraper_api.py
 ```
 > The anticipation begins...
+
+## Adding products via Presta Shop API
+Open scripts file:
+```
+cd path/to/this/project
+cd scripts
+```
+
+Create _venv_, activate it and download python packages as previously.
+Run the script:
+```
+py ./api-script.py
+```
+
 ## Team members 
 
  - Alicja Graczyk 188814
