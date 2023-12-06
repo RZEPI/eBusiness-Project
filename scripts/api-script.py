@@ -32,6 +32,12 @@ def make_url(api_path=""):
     else:
         return f"{URI}/api/{api_path}"
 
+def choose_api_key():
+    if len(sys.argv) > 1:
+        return str(sys.argv[1]).strip()
+    else:
+        return API_KEY
+
 def map_categories(categories, categories_assigned):
     if not categories_assigned:
         return [(category, 1) for category in categories]
@@ -118,13 +124,9 @@ def add_products(products, subcategories):
         set_quantity(product_id)
         add_images(product_id, product["images"])
 
-if len(sys.argv) > 1:
-    key = str(sys.argv[1]).strip()
-else:
-    key = API_KEY
-
-print(key)
+key = choose_api_key()
 url = make_url()
+
 prestashop = PrestaShopWebServiceDict(url, key)
 
 categories = load_json_data()
