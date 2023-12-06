@@ -26,6 +26,7 @@ services:
     environment:
       PS_FOLDER_ADMIN: admin123
       PS_FOLDER_INSTALL: install123
+      PS_DEV_MODE: 1
     volumes:
       - ./src:/var/www/html
     networks:
