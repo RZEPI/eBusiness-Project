@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 PRODUCT_PROXY = "https://product-proxy-v2.adtech-prod.nikecloud.com/products"
 DEBUG = True
 SIDE_LANG = "https://www.nike.com/pl"
-PRODUCT_AMOUNT = 240
+PRODUCT_AMOUNT = 1000
 
 options = Options()
 options.add_argument("--headless")
