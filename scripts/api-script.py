@@ -40,7 +40,7 @@ def choose_api_key():
 
 def map_categories(categories, categories_assigned):
     if not categories_assigned:
-        return [(category, 1) for category in categories]
+        return [(category, HOME_CAT_ID) for category in categories]
     
     new_categories = []
     for category in categories:
