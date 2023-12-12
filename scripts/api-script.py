@@ -70,7 +70,7 @@ def match_subcategory(product, subcategories_assigned :dict):
     return subcategories_assigned.get(cat_name, 1)
 
 def set_quantity(product_id):
-    quantity = randint(0,1200)
+    quantity = randint(0,10)
 
     stock_id = prestashop.get('stock_availables', options={'filter[id_product]': product_id})['stock_availables']['stock_available']['attrs']['id']
     stock_dict = prestashop.get('stock_availables', resource_id=stock_id)
