@@ -35,14 +35,18 @@ Grant permissions recursively to all files:
 ```
 sudo chmod -R 777 *
 ```
+Generate a self-signed SSL certificate using a script. This should be done only on the first launch of the store:
+```
+./generateSSL.sh
+```
 Run the store using docker compose. You may have to wait a while for the images to download:
 ```
 docker compose up -d
 ```
-Open the main store page:
-Open a web browser and go to the address localhost:8080
+Open the main store page:  
+Open a web browser and go to the address https://localhost
 
-To close the store:
+To close the store:  
 Run the script creating a database dump:
 ```
 ./dump.sh

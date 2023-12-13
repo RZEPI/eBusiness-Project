@@ -3,4 +3,6 @@ scraper/browser driver/
 source/database
 source/src/cache/
 source/src/var/cache/
+*.key
+*.crt
 *.log
