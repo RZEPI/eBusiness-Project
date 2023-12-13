@@ -77,14 +77,14 @@ pip install -r requirements.txt
 Run tests script:
 ```
 py ./main.py
-=======
+```
+
 ## Adding products via Presta Shop API
 Open scripts file:
 ```
 cd path/to/this/project
 cd scripts
 ```
-
 Create _venv_, activate it and download python packages as previously.
 Run the script:
 ```
