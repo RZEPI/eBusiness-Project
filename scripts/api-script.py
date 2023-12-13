@@ -22,9 +22,6 @@ def load_json_data(file_name=CATEGORIES_FILE):
         json_data = json.loads(file.read())
     return json_data
 
-def save_json_data(data, file_name="categories_ids.json"):
-    with open(f"{DATA_PATH}{file_name}", 'w') as file:
-        file.write(json.dumps(data))
 
 def make_url(api_path=""):
     if IS_SECURE:
@@ -38,36 +35,37 @@ def choose_api_key():
     else:
         return API_KEY
 
-def map_categories(categories, categories_assigned):
-    if not categories_assigned:
-        return [(category, HOME_CAT_ID) for category in categories]
-    
-    new_categories = []
-    for category in categories:
-        for category_name, category_id in categories_assigned.items():
-            new_categories.append((f"{category_name}-{category}", category_id))
 
-    return new_categories
-
-def add_categories(categories, categories_assigned={}):
+def add_categories(categories, category_id=HOME_CAT_ID):
     category_dict = prestashop.get('categories', options={'schema': 'blank'})
-    description = "Category " if not categories_assigned else "Subcategory "
-    categories = map_categories(categories, categories_assigned)
+    description = "Category " if category_id == HOME_CAT_ID else "Subcategory "
     
     category_assignment = {}
-    for category, category_id in categories:
+    for category in categories:
         category_dict["category"]["name"]["language"]["value"] = category
         category_dict["category"]["link_rewrite"]["language"]["value"] = category.lower().replace(" ", "-")
         category_dict["category"]["description"]["language"]["value"] = f"{description} {category}"
         category_dict["category"]["active"] = 1
         category_dict["category"]["id_parent"] = category_id
         new_category_id = prestashop.add('categories', category_dict)['prestashop']['category']['id']
-        category_assignment[category] = int(new_category_id)
+
+        if category_id == HOME_CAT_ID:
+            category_assignment[category] = []
+            for subcategory in categories[category]:
+                category_assignment[category].append(add_categories([subcategory], new_category_id))
+        else:
+            category_assignment[category] = new_category_id        
+            
     return category_assignment
 
-def match_subcategory(product, subcategories_assigned :dict):
-    cat_name = f"{product['category']}-{product['subcategories'][0]}"
-    return subcategories_assigned.get(cat_name, 1)
+def match_subcategory(product, categories_assigned:dict):
+    category = categories_assigned[product["category"]]
+    prod_subcat = product["subcategories"][0]
+    for subcategory in category:
+        if prod_subcat in subcategory.keys():
+            return int(subcategory[prod_subcat])
+
+    return HOME_CAT_ID
 
 def set_quantity(product_id):
     quantity = randint(0,10)
@@ -89,14 +87,14 @@ def add_images(product_id, images):
 
         prestashop.add(f"images/products/{product_id}", files=[('image', image, image_content)])
 
-def add_products(products, subcategories):
+def add_products(products, categories):
     product_dict = prestashop.get('products', options={'schema': 'blank'})
 
     del product_dict["product"]["position_in_category"]   
     del product_dict["product"]["associations"]["combinations"]
 
     for product in products:
-        subcategory_id = match_subcategory(product, subcategories)
+        subcategory_id = match_subcategory(product, categories)
         price = round(float(product["price"]) / 1.23, 2)
 
         product_dict["product"]["name"]["language"]["value"] = product["name"]
@@ -130,11 +128,8 @@ url = make_url()
 prestashop = PrestaShopWebServiceDict(url, key)
 
 categories = load_json_data()
-subcategories = load_json_data(SUBCATEGORIES_FILE)
 
 categories_assigned = add_categories(categories)
-save_json_data(categories_assigned)
 
-subcategories_assigned = add_categories(subcategories, categories_assigned)
 products = load_json_data(PRODUCTS_FILE)
-add_products(products,subcategories_assigned)
+add_products(products, categories_assigned)
