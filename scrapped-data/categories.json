@@ -1,5 +1,38 @@
-[
-    "FOOTWEAR",
-    "APPAREL",
-    "EQUIPMENT"
-]
+{
+    "APPAREL": [
+        "Football",
+        "Soccer",
+        "Golf",
+        "Training & Gym",
+        "Skateboarding",
+        "Basketball",
+        "Workouts",
+        "Baseball",
+        "Swimming",
+        "Lifestyle"
+    ],
+    "FOOTWEAR": [
+        "Soccer",
+        "Golf",
+        "Training & Gym",
+        "Hockey",
+        "Basketball",
+        "Running",
+        "Track & Field",
+        "Lifestyle",
+        "Tennis"
+    ],
+    "EQUIPMENT": [
+        "Soccer",
+        "Golf",
+        "Training & Gym",
+        "Basketball",
+        "Workouts",
+        "Running",
+        "Lifestyle",
+        "Tennis"
+    ],
+    "PHYSICAL_GIFT_CARD": [
+        "Lifestyle"
+    ]
+}
