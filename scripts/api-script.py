@@ -11,7 +11,7 @@ SUBCATEGORIES_FILE = "/subcategories.json"
 PRODUCTS_FILE = "/products.json"
 
 API_KEY = "2ACW94YGW4W8H53JCZYGUQG1Y4VYJWM8"
-IS_SECURE = True
+IS_SECURE = False
 URI = "http://localhost:8080"
 URI_SECURE = "https://localhost:8080"
 
