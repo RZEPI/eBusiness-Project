@@ -1,0 +1,5 @@
+[2023-12-01 23:30:03] request.INFO: Matched route "admin_link_block_list". {"route":"admin_link_block_list","route_parameters":{"_controller":"PrestaShop\\Module\\LinkList\\Controller\\Admin\\Improve\\Design\\LinkBlockController::listAction","_legacy_controller":"AdminLinkWidget","_legacy_link":"AdminLinkWidget","_route":"admin_link_block_list"},"request_uri":"http://localhost:8080/admin123/index.php/modules/link-widget/list?_token=WUeImshsvn5ZPwRlO_AHRppoAvZ09jeQQpaKewhfewA","method":"GET"} []
+[2023-12-01 23:30:03] security.DEBUG: Read existing security token from the session. {"key":"_security_main","token_class":"Symfony\\Component\\Security\\Core\\Authentication\\Token\\UsernamePasswordToken"} []
+[2023-12-01 23:30:03] security.DEBUG: User was reloaded from a user provider. {"provider":"PrestaShopBundle\\Security\\Admin\\EmployeeProvider","username":"admin@admin.com"} []
+[2023-12-01 23:30:08] app.ERROR: Data from PrestaShop Addons is invalid, and cannot fallback on cache. [] []
+[2023-12-01 23:30:08] security.DEBUG: Stored the security token in the session. {"key":"_security_main"} []

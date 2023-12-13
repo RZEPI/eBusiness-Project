@@ -13,6 +13,7 @@ DEBUG = True
 SIDE_LANG = "https://www.nike.com/pl"
 PRODUCT_AMOUNT = 1200
 
+
 options = Options()
 options.add_argument("--headless")
 options.page_load_strategy = 'eager'
