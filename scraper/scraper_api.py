@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 PRODUCT_PROXY = "https://product-proxy-v2.adtech-prod.nikecloud.com/products"
 DEBUG = True
 SIDE_LANG = "https://www.nike.com/pl"
-PRODUCT_AMOUNT = 240
+PRODUCT_AMOUNT = 1200
 
 options = Options()
 options.add_argument("--headless")
@@ -20,10 +20,6 @@ options.page_load_strategy = 'eager'
 def get_product_list(products_json):
     return products_json["data"]["products"]["products"]
 
-
-def add_subcategories(subcategories, procuct_subcategories):
-    for product_subcategory in procuct_subcategories:
-        subcategories.add(product_subcategory)
 
 def get_colorway_data(colorway_data):
     name = colorway_data["colorDescription"]
@@ -122,18 +118,17 @@ def get_product(product_data):
 
 def parse_product_list(product_list):
     parsed_products = []
-    categories = set()
-    subcategories = set()
+    categories = {}
 
     for product_data in product_list:
         parsed_product = get_product(product_data)
 
         if parsed_product:
             parsed_products.append(parsed_product)
-            categories.add(parsed_product["category"])
-            add_subcategories(subcategories, parsed_product["subcategories"])
+            categories[parsed_product["category"]] = set(parsed_product["subcategories"])
+             
 
-    return parsed_products, categories, subcategories
+    return parsed_products, categories
 
 
 def save_json_to_file(filename, data):
@@ -141,29 +136,43 @@ def save_json_to_file(filename, data):
         f.write(json.dumps(data, indent=4, ensure_ascii=False))
 
 
+def add_new_categories(categories, new_categories):
+    for new_category in new_categories.keys():
+        if new_category in categories.keys():
+            categories[new_category] = categories[new_category].union(new_categories[new_category])
+        else:
+            categories[new_category] = new_categories[new_category]
+        
+
 parsed_products = []
-categories = set()
-subcategories = set()
+categories = {}
 
-for i in range(0, math.ceil(PRODUCT_AMOUNT / 24) + 1):
-    url = f"https://api.nike.com/cic/browse/v2?queryid=products&anonymousId=CEECF3AC20010BAEB835F89C9708F086&country=pl&endpoint=%2Fproduct_feed%2Frollup_threads%2Fv2%3Ffilter%3Dmarketplace(PL)%26filter%3Dlanguage(pl)%26filter%3DemployeePrice(true)%26searchTerms%3Dmen%26anchor%3D{i*24}%26consumerChannelId%3Dd9a5bc42-4b9c-4976-858a-f159cf99c647%26count%3D24&language=pl&localizedRangeStr=%7BlowestPrice%7D%20%E2%80%93%20%7BhighestPrice%7D"
+try:
+    for i in range(0, math.ceil(PRODUCT_AMOUNT / 24) + 1):
+        url = f"https://api.nike.com/cic/browse/v2?queryid=products&anonymousId=CEECF3AC20010BAEB835F89C9708F086&country=pl&endpoint=%2Fproduct_feed%2Frollup_threads%2Fv2%3Ffilter%3Dmarketplace(PL)%26filter%3Dlanguage(pl)%26filter%3DemployeePrice(true)%26searchTerms%3Dmen%26anchor%3D{i*24}%26consumerChannelId%3Dd9a5bc42-4b9c-4976-858a-f159cf99c647%26count%3D24&language=pl&localizedRangeStr=%7BlowestPrice%7D%20%E2%80%93%20%7BhighestPrice%7D"
 
-    response = requests.get(url)
+        response = requests.get(url)
 
-    if response.status_code == 200:
-        product_list_data = get_product_list(json.loads(response.content))
-        parsed_products_, categories_, subcategories_ = parse_product_list(
-            product_list_data
-        )
-        parsed_products.extend(parsed_products_)
-        categories.update(categories_)
-        subcategories.update(subcategories_)
-
+        if response.status_code == 200:
+            product_list_data = get_product_list(json.loads(response.content))
+            parsed_products_, categories_ = parse_product_list(
+                product_list_data
+            )
+            parsed_products.extend(parsed_products_)
+            add_new_categories(categories, categories_)
+    
+        if len(parsed_products) >= PRODUCT_AMOUNT:
+            break
+except BaseException:
+    pass
 
 if DEBUG:
     print(json.dumps(parsed_products, indent=4))
     print(len(parsed_products))
 
+for catetegory in categories.keys():
+    categories[catetegory] = list(categories[catetegory])
+
+
 save_json_to_file("products", parsed_products)
-save_json_to_file("categories", list(categories))
-save_json_to_file("subcategories", list(subcategories))
+save_json_to_file("categories", categories)
