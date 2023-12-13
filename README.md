@@ -78,7 +78,6 @@ Run tests script:
 ```
 py ./main.py
 ```
-=======
 ## Adding products via Presta Shop API
 Open scripts file:
 ```
