@@ -11,14 +11,8 @@ chrome_options.add_argument("--ignore-certificate-errors")
 chrome_options.add_argument("--start-maximized")
 chrome_options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=chrome_options)
-SHOP_PAGE = "http://localhost:8080/index.php"
-MENU_SELECTORS = ["#category-3 > a", "#category-6 > a", "#category-9 > a"]
-CLOTHES_SUBMENU_SELECTORS = ["#category-4 > a", "#category-5 > a"]
-HOME_ACCESSORIES_SELECTOR = "#category-8 > a"
-# SUB MEN SELECTORS
-#js-product-list > div.products.row > div > article > div > div.thumbnail-top > a > img
-# ADD TO CART SELECTOR
-#add-to-cart-or-refresh > div.product-add-to-cart.js-product-add-to-cart > div > div.add > button
+SHOP_PAGE = "https://localhost"
+MENU_SELECTORS = ["#category-58 > a", "#category-69 > a", "#category-79 > a", "#category-88 > a"]
 def read_test_number(filename="test_number.txt"):
     try:
         with open(filename, 'r') as file:
@@ -57,18 +51,17 @@ def add_to_cart(ammount):
     driver.find_element(By.CSS_SELECTOR, "#add-to-cart-or-refresh > div.product-add-to-cart.js-product-add-to-cart > div > div.add > button").click()
     # go back to shop
     continue_shopping()
-    return_to_category()
+    return_to_main_page()
     return
 
 def test_searchbar():
     search_bar = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, "#search_widget > form > input.ui-autocomplete-input")))
-    search_bar.send_keys("kubek", Keys.RETURN)
+    search_bar.send_keys("air", Keys.RETURN)
     time.sleep(2)
-    item = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, "#js-product-list > div.products.row > div:nth-child(2) > article > div > div.thumbnail-top > a > img")))
+    item = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, "#js-product-list > div.products.row > div:nth-child(5) > article > div > div.thumbnail-top > a > img")))
     time.sleep(2)
     item.click()
-    add_to_cart(3)
-    return_to_main_page()
+    add_to_cart(1)
     return
 
 def go_to_cart():
@@ -177,6 +170,19 @@ def download_invoice():
     return_to_main_page()
     return
 
+def select_product(category, subcategory, product, amount):
+    menu = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, category)))
+    ActionChains(driver).move_to_element(menu).perform()
+    submenu = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, subcategory)))
+    time.sleep(1)
+    submenu.click()
+
+    product = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, product)))
+    time.sleep(1)
+    product.click()
+    add_to_cart(amount)
+    return
+
 TEST_NUMBER = read_test_number()
 
 def main():
@@ -184,48 +190,40 @@ def main():
     driver.get(SHOP_PAGE)
 
     # ADD 10 PRODUCTS TO CART BETA, ONLY ONE ITEM ADDED FOR NOW
-    # Select the first category
-    menu = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, MENU_SELECTORS[1])))
-    ActionChains(driver).move_to_element(menu).perform()
-    submenu = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, HOME_ACCESSORIES_SELECTOR)))
-    time.sleep(2)
-    submenu.click()
-    # Select the products
-    product = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, '#js-product-list > div.products.row > div:nth-child(1) > article > div > div.thumbnail-top > a > img')))
-    time.sleep(2)
-    product.click()
-    add_to_cart(10)
-    product2 = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, '#js-product-list > div.products.row > div:nth-child(2) > article > div > div.thumbnail-top > a > img')))
-    time.sleep(2)
-    product2.click()
-    add_to_cart(4)
-    print("add_to_cart() passed")
-    return_to_main_page()
+    select_product(MENU_SELECTORS[0], "#category-59 > a", "#js-product-list > div.products.row > div:nth-child(4) > article > div > div.thumbnail-top > a > img", 2)
+    select_product(MENU_SELECTORS[0], "#category-64 > a", "#js-product-list > div.products.row > div:nth-child(1) > article > div > div.thumbnail-top > a > img", 3)
+    select_product(MENU_SELECTORS[0], "#category-66 > a", "#js-product-list > div.products.row > div:nth-child(1) > article > div > div.thumbnail-top > a > img", 4)
+
+    select_product(MENU_SELECTORS[1], "#category-71 > a", "#js-product-list > div.products.row > div:nth-child(2) > article > div > div.thumbnail-top > a > img", 2)
+    select_product(MENU_SELECTORS[1], "#category-70 > a", "#js-product-list > div.products.row > div:nth-child(5) > article > div > div.thumbnail-top > a > img", 3)
+    select_product(MENU_SELECTORS[1], "#category-75 > a", "#js-product-list > div.products.row > div:nth-child(6) > article > div > div.thumbnail-top > a > img", 2)
+
+    select_product(MENU_SELECTORS[2], "#category-82 > a", "#js-product-list > div.products.row > div > article > div > div.thumbnail-top > a > img", 1)
+    select_product(MENU_SELECTORS[2], "#category-84 > a", "#js-product-list > div.products.row > div:nth-child(3) > article > div > div.thumbnail-top > a > img", 5)
+    select_product(MENU_SELECTORS[2], "#category-81 > a", "#js-product-list > div.products.row > div:nth-child(2) > article > div > div.thumbnail-top > a > img", 2)
+
+    select_product(MENU_SELECTORS[3], "#category-89 > a", "#js-product-list > div.products.row > div:nth-child(1) > article > div > div.thumbnail-top > a > img", 3)
 
     # SEARCH PRODUCT BY NAME AND ADD TO CART
     test_searchbar()
-    print("test_searchbar() passed")
-    # REMOVE ITEMS FROM CART BETA, NO REAL PRODUCTS IN STORE YET, ONLY 2 REMOVED FOR NOW
-    remove_from_cart(2)
-    print("remove_from_cart() passed")
-    return_to_main_page()
 
+    # REMOVE ITEMS FROM CART BETA, NO REAL PRODUCTS IN STORE YET, ONLY 2 REMOVED FOR NOW
+    remove_from_cart(3)
+
+    return_to_main_page()
     # REGISTER NEW ACCOUNT
     register_account()
-    print("register_account() passed")
 
     # MAKE ORDER
     make_order()
-    print("make_order() passed")
 
     # CHECK ORDER STATUS
     check_order_status()
-    print("check_order_status() passed")
-    return_to_main_page()
 
+    return_to_main_page()
     # DOWNLOAD INVOICE
     download_invoice()
-    print("download_invoice() passed")
+
     time.sleep(5)
     driver.quit()
 
