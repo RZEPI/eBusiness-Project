@@ -9,8 +9,6 @@ services:
       - MYSQL_DATABASE=prestashop-database
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=root
-    ports:
-      - 3306
     volumes:
       - ./database:/var/lib/mysql
       - ./dump:/docker-entrypoint-initdb.d
@@ -18,15 +16,19 @@ services:
       - prestashop_network
   prestashop:
     container_name: prestashop
-    image: prestashop/prestashop:1.7.8-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
       - mariadb
     ports:
       - 8080:80
+      - 443:443
     environment:
       PS_FOLDER_ADMIN: admin123
       PS_FOLDER_INSTALL: install123
+      PS_DEV_MODE: 1
     volumes:
       - ./src:/var/www/html
     networks:
