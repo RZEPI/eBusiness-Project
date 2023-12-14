@@ -1,0 +1,6 @@
+ID;"Nazwa kontaktu";Imię;Nazwisko;"Adres e-mail";Firma;Sprzedaż;Włączony;Newsletter;"Oferty partnerskie";Rejestracja;"Ostatnia wizyta"
+5;Pan;Matt;Smith;testmail41@gmail.com;;;1;0;0;"2023-12-13 22:45:29";"2023-12-13 22:43:56"
+4;Pan;aaa;aaaa;aaa@aaa.com;;;1;0;0;"2023-12-02 01:26:43";"2023-12-02 01:27:19"
+3;Pani;aaaaa;aaaaa;aaaaa@sadfas.com;;;1;0;0;"2023-12-02 00:16:54";"2023-12-01 23:23:35"
+2;Pan;John;DOE;pub@prestashop.com;;;1;1;1;"2023-11-26 21:41:34";"2023-11-26 21:41:35"
+1;Pan;Anonymous;Anonymous;anonymous@psgdpr.com;;;0;0;0;"2023-11-26 21:41:19";

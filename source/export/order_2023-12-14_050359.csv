@@ -1,0 +1,8 @@
+ID;Indeks;"Nowy klient";Dostawa;Klient;Razem;Płatność;Wyświetlany;Data
+7;LNMMTNAHE;1;Polska;"M. Smith";7 714,90 zł;"Płatność przy odbiorze";"Oczekiwanie na płatność przy odbiorze";"2023-12-13 22:45:56"
+6;MTKMRYMVN;1;Polska;"a. aaaaa";82,65 zł;"Płatności elektroniczne";"Oczekiwanie na płatność przelewem";"2023-12-02 00:50:31"
+5;KHWLILZLL;0;"Stany Zjednoczone";"J. DOE";27,30 zł;"Bank wire";"Oczekiwanie na płatność przelewem";"2023-11-26 21:41:35"
+4;FFATNOMMJ;0;"Stany Zjednoczone";"J. DOE";21,30 zł;"Payment by check";"Oczekiwanie na płatność czekiem";"2023-11-26 21:41:35"
+3;UOYEVOLI;0;"Stany Zjednoczone";"J. DOE";21,30 zł;"Payment by check";"Błąd płatności";"2023-11-26 21:41:35"
+2;OHSATSERP;0;"Stany Zjednoczone";"J. DOE";169,90 zł;"Payment by check";"Oczekiwanie na płatność czekiem";"2023-11-26 21:41:35"
+1;XKBKNABJK;1;"Stany Zjednoczone";"J. DOE";68,20 zł;"Payment by check";Anulowane;"2023-11-26 21:41:35"
