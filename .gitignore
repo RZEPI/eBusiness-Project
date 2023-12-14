@@ -1,4 +1,6 @@
 scraper/venv/
+scripts/venv/
+tests/venv/
 scraper/browser driver/
 source/database
 source/src/cache/

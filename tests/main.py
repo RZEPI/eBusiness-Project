@@ -58,7 +58,7 @@ def test_searchbar():
     search_bar = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, "#search_widget > form > input.ui-autocomplete-input")))
     search_bar.send_keys("air", Keys.RETURN)
     time.sleep(2)
-    item = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, "#js-product-list > div.products.row > div:nth-child(5) > article > div > div.thumbnail-top > a > img")))
+    item = WebDriverWait(driver, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, "#js-product-list > div.products.row > div:nth-child(3) > article > div > div.thumbnail-top > a > img")))
     time.sleep(2)
     item.click()
     add_to_cart(1)
