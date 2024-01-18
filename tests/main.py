@@ -11,7 +11,7 @@ chrome_options.add_argument("--ignore-certificate-errors")
 chrome_options.add_argument("--start-maximized")
 chrome_options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=chrome_options)
-SHOP_PAGE = "https://localhost"
+SHOP_PAGE = "https://localhost:18434"
 MENU_SELECTORS = ["#category-58 > a", "#category-69 > a", "#category-79 > a", "#category-88 > a"]
 def read_test_number(filename="test_number.txt"):
     try:
